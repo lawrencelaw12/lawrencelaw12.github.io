@@ -136,6 +136,9 @@
                     <td><label for="message">Message:</label></td>
                     <td><textarea id="message" name="message" rows="5" required></textarea></td>
                   </tr>
+                  <tr id="message-warning" style="display: none;">
+                    <td colspan="2" style="color: red;">Message too long, only 250 characters accepted</td>
+                  </tr>
                   <tr>
                     <td><button type="submit">Submit</button></td>
                   </tr>
@@ -173,12 +176,25 @@ const hourlyRateDiv = document.getElementById('hourly-rate-row');
   function validateInput() {
   var hourlyRateInput = document.getElementById("hourly-rate");
   var hourlyRateWarning = document.getElementById("hourly-rate-warning");
+  var hiringRadio = document.querySelector('input[name="options"][value="Hiring"]');
+  if (hiringRadio.checked) {
+    if (hourlyRateInput.value <= 0) {
+      hourlyRateWarning.style.display = "table-row";
+      return false;
+    } else {
+      hourlyRateWarning.style.display = "none";
+      return true;
+    }
+  }
 
-  if (hourlyRateInput.value <= 0) {
-    hourlyRateWarning.style.display = "table-row";
+  var messageInput = document.getElementById("message");
+  var messageInputWarning = document.getElementById("message-warning");
+
+  if (messageInput.value.length > 250) {
+    messageInputWarning.style.display = "table-row";
     return false;
   } else {
-    hourlyRateWarning.style.display = "none";
+    messageInputWarning.style.display = "none";
     return true;
   }
 }
